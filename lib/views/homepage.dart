@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:quranic_academy/views/widgets/base_card.dart';
@@ -181,6 +182,24 @@ class HomePage extends StatelessWidget {
                   );
                 },
               ),
+              kDebugMode
+                  ? Padding(
+                      padding: const EdgeInsets.only(top: 12.0),
+                      child: BaseCard(
+                        title: 'Debug: Last API',
+                        child: Obx(() {
+                          final s = ctrl.lastApiRaw.value;
+                          return SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Text(
+                              s.isNotEmpty ? s : 'No API response captured',
+                              style: Theme.of(context).textTheme.bodySmall,
+                            ),
+                          );
+                        }),
+                      ),
+                    )
+                  : const SizedBox.shrink(),
             ],
           ),
         );
