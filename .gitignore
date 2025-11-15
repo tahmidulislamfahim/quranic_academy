@@ -44,6 +44,6 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
+# Local secrets (do not commit)
 lib/secrets.dart
 .env.local
-
