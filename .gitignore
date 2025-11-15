@@ -46,3 +46,7 @@ app.*.map.json
 
 # Environment file (contains secrets)
 .env
+
+# Local secrets (do not commit)
+lib/secrets.dart
+.env.local

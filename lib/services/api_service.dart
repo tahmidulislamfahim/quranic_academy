@@ -2,12 +2,14 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:quranic_academy/secrets.dart';
 
 class ApiService {
-  // Default base for islamicapi.com; you can replace with your provider.
-  // Read API key from environment. Falls back to null if not provided.
-  static String? get apiKey => dotenv.env['ISLAMICAPI_KEY'];
+  static String? get apiKey {
+    if (kIslamicApiKey.isNotEmpty) return kIslamicApiKey;
+    return null;
+  }
+
   static const String defaultBase = 'https://islamicapi.com/api/v1';
 
   static Future<Map<String, dynamic>?> fetchPrayer(
@@ -27,9 +29,7 @@ class ApiService {
     );
 
     try {
-      debugPrint('ApiService: GET $uri');
       final res = await http.get(uri).timeout(const Duration(seconds: 8));
-      debugPrint('ApiService: Response ${res.statusCode} ${res.body}');
       if (res.statusCode == 200) {
         final Map<String, dynamic> body =
             json.decode(res.body) as Map<String, dynamic>;
@@ -45,7 +45,10 @@ class ApiService {
         } catch (_) {}
         return body;
       }
-    } catch (_) {}
+    } catch (e, st) {
+      debugPrint('ApiService: fetchPrayer error: $e');
+      debugPrint(st.toString());
+    }
     return null;
   }
 

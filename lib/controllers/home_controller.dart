@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:geolocator/geolocator.dart';
@@ -18,6 +20,7 @@ class HomeController extends GetxController {
   final qiblaDegrees = 0.0.obs;
   final prohibitedTimes = <String, String>{}.obs;
   final lastUpdated = Rxn<DateTime>();
+  final lastApiRaw = ''.obs;
   final isOfflineCached = false.obs;
 
   bool get loading => _loading.value;
@@ -66,6 +69,9 @@ class HomeController extends GetxController {
           Get.snackbar('Offline', 'No internet — showing last cached data');
 
           final cachedBody = cachedPrayer['body'] as Map<String, dynamic>;
+          try {
+            lastApiRaw.value = json.encode(cachedBody);
+          } catch (_) {}
 
           // parse prayer timings
           try {
@@ -281,6 +287,11 @@ class HomeController extends GetxController {
 
       // Fetch raw API data to extract date, qibla and prohibited times
       final apiRaw = await ApiService.fetchPrayer(loc.latitude, loc.longitude);
+      try {
+        lastApiRaw.value = apiRaw != null ? json.encode(apiRaw) : '';
+      } catch (_) {
+        lastApiRaw.value = '';
+      }
 
       final times = await PrayerService.getPrayerTimes(
         date: date,
@@ -451,6 +462,9 @@ class HomeController extends GetxController {
       );
       nisab.value = nisabVal;
     } catch (e) {
+      try {
+        lastApiRaw.value = 'Error: ${e.toString()}';
+      } catch (_) {}
       prayerTimes.clear();
       fasting.value = 'Error loading data';
       nisab.value = 'Error';
