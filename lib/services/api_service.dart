@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:quranic_academy/secrets.dart';
@@ -45,10 +44,8 @@ class ApiService {
         } catch (_) {}
         return body;
       }
-    } catch (e, st) {
-      debugPrint('ApiService: fetchPrayer error: $e');
-      debugPrint(st.toString());
-    }
+      // ignore: empty_catches
+    } catch (e) {}
     return null;
   }
 
@@ -99,9 +96,7 @@ class ApiService {
     );
 
     try {
-      debugPrint('ApiService: GET $uri');
       final res = await http.get(uri).timeout(const Duration(seconds: 8));
-      debugPrint('ApiService: Response ${res.statusCode} ${res.body}');
       if (res.statusCode == 200) {
         final Map<String, dynamic> body =
             json.decode(res.body) as Map<String, dynamic>;
@@ -136,9 +131,7 @@ class ApiService {
     );
 
     try {
-      debugPrint('ApiService: GET $uri');
       final res = await http.get(uri).timeout(const Duration(seconds: 8));
-      debugPrint('ApiService: Response ${res.statusCode} ${res.body}');
       if (res.statusCode == 200) {
         final Map<String, dynamic> body =
             json.decode(res.body) as Map<String, dynamic>;
