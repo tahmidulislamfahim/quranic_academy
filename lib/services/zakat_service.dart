@@ -15,11 +15,6 @@ class ZakatService {
       unit: 'g',
     );
     if (nisabApi != null) {
-      // debug
-      try {
-        // ignore: avoid_print
-        print('ZakatService: nisabApi keys = ${nisabApi.keys.toList()}');
-      } catch (_) {}
       try {
         if (nisabApi.containsKey('data') && nisabApi['data'] is Map) {
           final data = nisabApi['data'] as Map<String, dynamic>;

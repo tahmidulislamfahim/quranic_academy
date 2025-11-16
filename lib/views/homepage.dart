@@ -1,10 +1,10 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:quranic_academy/views/widgets/base_card.dart';
 import 'package:quranic_academy/views/widgets/fasting_card.dart';
 import 'package:quranic_academy/views/widgets/header_section.dart';
 import 'package:quranic_academy/views/widgets/info_row.dart';
+import 'package:quranic_academy/views/widgets/date_hijri_card.dart';
 import 'package:quranic_academy/views/widgets/prayer_card.dart';
 import 'package:quranic_academy/views/widgets/compass/qibla_compass.dart';
 import 'package:quranic_academy/views/widgets/zakat_card.dart';
@@ -24,7 +24,7 @@ class HomePage extends StatelessWidget {
         backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
         centerTitle: true,
         title: Text(
-          'Islamic Times — Bangladesh',
+          'Islamic Times',
           style: Theme.of(
             context,
           ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
@@ -49,23 +49,10 @@ class HomePage extends StatelessWidget {
               const HeaderSection(),
               const SizedBox(height: 18),
 
-              // Build card widgets list (we'll layout responsively below)
+              // Build card widgets list (responsive)
               Builder(
                 builder: (context) {
-                  final dateCard = BaseCard(
-                    title: 'Date & Hijri',
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        if (ctrl.dateReadable.isNotEmpty)
-                          InfoRow("Date", ctrl.dateReadable.value),
-                        if (ctrl.gregorian.isNotEmpty)
-                          InfoRow("Gregorian", ctrl.gregorian.value),
-                        if (ctrl.hijri.isNotEmpty)
-                          InfoRow("Hijri", ctrl.hijri.value),
-                      ],
-                    ),
-                  );
+                  final dateCard = DateHijriCard(ctrl: ctrl);
 
                   final qiblaCard = BaseCard(
                     title: 'Qibla Direction',
@@ -103,7 +90,7 @@ class HomePage extends StatelessWidget {
                     ),
                   );
 
-                  final widgetsList = [
+                  final List<Widget> widgetsList = [
                     dateCard,
                     qiblaCard,
                     prohibitedCard,
@@ -182,24 +169,6 @@ class HomePage extends StatelessWidget {
                   );
                 },
               ),
-              kDebugMode
-                  ? Padding(
-                      padding: const EdgeInsets.only(top: 12.0),
-                      child: BaseCard(
-                        title: 'Debug: Last API',
-                        child: Obx(() {
-                          final s = ctrl.lastApiRaw.value;
-                          return SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            child: Text(
-                              s.isNotEmpty ? s : 'No API response captured',
-                              style: Theme.of(context).textTheme.bodySmall,
-                            ),
-                          );
-                        }),
-                      ),
-                    )
-                  : const SizedBox.shrink(),
             ],
           ),
         );
