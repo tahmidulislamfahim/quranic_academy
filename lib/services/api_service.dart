@@ -15,7 +15,7 @@ class ApiService {
     double lat,
     double lon, {
     int method = 3,
-    int school = 1,
+    int school = 2,
   }) async {
     final uri = Uri.parse('$defaultBase/prayer-time/').replace(
       queryParameters: {
