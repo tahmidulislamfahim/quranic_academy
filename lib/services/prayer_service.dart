@@ -63,11 +63,6 @@ class PrayerService {
       timings = api['time'] as Map<String, dynamic>;
     }
 
-    try {
-      // ignore: avoid_print
-      print('PrayerService: detected timings keys = ${timings?.keys.toList()}');
-    } catch (_) {}
-
     if (timings != null) {
       final result = <String, DateTime>{};
       final fmt24 = DateFormat('HH:mm');

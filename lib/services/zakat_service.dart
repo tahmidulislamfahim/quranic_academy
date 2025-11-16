@@ -54,10 +54,6 @@ class ZakatService {
             if (silverStr != null) parts.add(silverStr);
             if (parts.isNotEmpty) {
               final out = parts.join(' • ');
-              try {
-                // ignore: avoid_print
-                print('ZakatService: returning nisab => $out');
-              } catch (_) {}
               return out;
             }
           }
