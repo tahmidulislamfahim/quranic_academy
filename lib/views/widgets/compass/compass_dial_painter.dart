@@ -42,8 +42,8 @@ class CompassDialPainter extends CustomPainter {
       final Paint tickPaint = Paint()
         ..strokeWidth = isMajor ? 2.2 : (isMedium ? 1.6 : 1.0)
         ..color = isDark
-            ? Colors.white70.withOpacity(isMajor ? 0.9 : 0.5)
-            : Colors.black54.withOpacity(isMajor ? 0.9 : 0.5)
+            ? Colors.white70.withValues(alpha: isMajor ? 0.9 : 0.5)
+            : Colors.black54.withValues(alpha: isMajor ? 0.9 : 0.5)
         ..strokeCap = StrokeCap.round;
       canvas.drawLine(
         Offset(
