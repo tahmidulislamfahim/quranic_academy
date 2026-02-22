@@ -13,12 +13,12 @@ class HeaderSection extends StatelessWidget {
         gradient: LinearGradient(
           colors: [
             const Color(0xFF3B82F6),
-            const Color(0xFF06B6D4).withOpacity(0.85),
+            const Color(0xFF06B6D4).withValues(alpha: 0.85),
           ],
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black26.withOpacity(0.1),
+            color: Colors.black26.withValues(alpha: 0.1),
             blurRadius: 12,
             spreadRadius: 1,
           ),
